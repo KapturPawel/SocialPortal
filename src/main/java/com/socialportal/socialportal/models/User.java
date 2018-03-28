@@ -1,20 +1,20 @@
 package com.socialportal.socialportal.models;
 
-import lombok.Data;
-
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-//@Data
+@Data
 @Entity
-@Table(name = "user")
+@NoArgsConstructor
 public class User {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
+    @Column(name = "user_id")
     private Long id;
 
     @NotNull
@@ -31,52 +31,17 @@ public class User {
 
     @NotNull
     @Column(unique = true)
-    private String email;
+    private String username;
 
     @Transient
     private String confirmPassword;
 
-    public Long getId() {
-        return id;
-    }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
+    public User(@NotNull @Size(min = 3, max = 30) String firstName, @NotNull @Size(min = 3, max = 30) String lastName, @NotNull @Size(min = 6, max = 60) String password, @NotNull String username) {
         this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
+        this.username = username;
     }
 
-    public String getUsername() {
-        return email;
-    }
-
-    public void setUsername(String username) {
-        this.email = username;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
 }

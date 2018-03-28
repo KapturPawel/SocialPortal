@@ -5,14 +5,19 @@ import com.socialportal.socialportal.errors.DifferentPasswordException;
 import com.socialportal.socialportal.errors.ExistingEmailException;
 import com.socialportal.socialportal.models.User;
 import com.socialportal.socialportal.services.IUserManager;
+import com.socialportal.socialportal.services.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserValidator implements IUserValidator {
 
-    @Autowired
     IUserManager userManager;
+
+    @Autowired
+    public UserValidator(IUserManager userManager){
+        this.userManager = userManager;
+    }
 
     public void validateUser(User user) throws DifferentPasswordException, ExistingEmailException {
         checkEmail(user);

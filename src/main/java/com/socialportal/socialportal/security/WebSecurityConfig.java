@@ -16,14 +16,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private MyUserDetailService myUserDetailService;
+
+    @Autowired
+    public WebSecurityConfig(MyUserDetailService myUserDetailService){
+        this.myUserDetailService = myUserDetailService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/registration", "/css/**", "/external/**", "/users").permitAll()
+                .antMatchers("/registration", "/css/**", "/external/**", "/users", "/statuses").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

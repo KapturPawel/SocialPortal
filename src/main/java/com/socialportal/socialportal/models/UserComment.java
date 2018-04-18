@@ -1,6 +1,5 @@
 package com.socialportal.socialportal.models;
 
-
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,32 +12,37 @@ import java.util.Date;
 @Data
 @Entity
 @NoArgsConstructor
-public class UserStatus {
+public class UserComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "tab")
     @Setter(AccessLevel.NONE)
-    @Column(name = "status_id")
-    private Long statusId;
+    private Long commentId;
 
     @NotNull
     private String content;
 
     @NotNull
+    private Date date;
+
+    @NotNull
     private Long userId;
 
     @NotNull
-    private Date date;
+    @ManyToOne
+    @JoinColumn
+    private UserStatus userStatus;
 
     @NotNull
     @ManyToOne
     @JoinColumn
     private User addingUser;
 
-    public UserStatus(String content, Long userId, Date date, User addingUser) {
+    public UserComment(@NotNull String content, @NotNull Date date, @NotNull Long userId, @NotNull UserStatus userStatus, @NotNull User addingUser) {
         this.content = content;
-        this.userId = userId;
         this.date = date;
+        this.userId = userId;
+        this.userStatus = userStatus;
         this.addingUser = addingUser;
     }
 }

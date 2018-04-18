@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="head :: head">
+</head>
+<body>
+<nav th:replace="navbar :: navbar"></nav>
+<div id="content" class="container">
+    <h1>Friends:</h1>
+    <table>
+        <tr th:object="${friends}" th:each="friend : ${friends}">
+            <td th:text="${friend.friend.firstName} + ' ' + ${friend.friend.lastName}"></td>
+            <form action="#" th:action="@{'/userprofile/' + ${friend.friend.id}}" method="get">
+                <td>
+                    <button class="btn btn-default">Profile</button>
+                </td>
+            </form>
+            <form th:if="${yourFriends.contains(friend.friend) == true}"
+                  th:action="@{'/deletefriend/' + ${friend.friend.id}}" method="post">
+                <td>
+                    <button class="btn btn-default">Delete from friends</button>
+                </td>
+            </form>
+            <form th:if="${yourFriends.contains(friend.friend) == false and loggedUserid != friend.friend.id}"
+                  th:action="@{'/addfriend/' + ${friend.friend.id}}" method="post">
+                <td>
+                    <button class="btn btn-default">Add to friends</button>
+                </td>
+            </form>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

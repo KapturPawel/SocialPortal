@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="head :: head">
+</head>
+<body>
+<nav th:replace="navbar :: navbar"></nav>
+<div id="content" class="container">
+    <h1 th:if="${privilege}" th:text="${privilege}"></h1>
+    <h1 th:if="${sameUser}" th:text="${sameUser}"></h1>
+    <h1 th:if="${haveThisFriend}" th:text="${haveThisFriend}"></h1>
+    <h1 th:if="${invitationExists}" th:text="${invitationExists}"></h1>
+</div>
+</body>
+</html>

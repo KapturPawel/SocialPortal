@@ -10,22 +10,18 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@Data
 @Entity
+@Data
 @NoArgsConstructor
-public class UserStatus {
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "tab")
     @Setter(AccessLevel.NONE)
-    @Column(name = "status_id")
-    private Long statusId;
+    private Long id;
 
     @NotNull
     private String content;
-
-    @NotNull
-    private Long userId;
 
     @NotNull
     private Date date;
@@ -33,12 +29,10 @@ public class UserStatus {
     @NotNull
     @ManyToOne
     @JoinColumn
-    private User addingUser;
+    private User receiver;
 
-    public UserStatus(String content, Long userId, Date date, User addingUser) {
-        this.content = content;
-        this.userId = userId;
-        this.date = date;
-        this.addingUser = addingUser;
-    }
+    @NotNull
+    @ManyToOne
+    @JoinColumn
+    private User sender;
 }

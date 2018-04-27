@@ -34,9 +34,9 @@
                             </div>
                             <div class="pull-right">
                                 <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle menu" type="button"
+                                    <button class="btn btn-default dropdown-toggle menu" type="button"
                                             data-toggle="dropdown"><span
-                                            class="caret"></span></button>
+                                            class="glyphicon glyphicon-option-horizontal"></span></button>
                                     <ul class="dropdown-menu">
                                         <li th:if="${friends.contains(user) == true}">
                                             <form th:action="@{'/deletefriend/' + ${user.id}}"
@@ -57,6 +57,11 @@
                                             <form th:action="@{'/deleteinvitation/' + ${loggedUserId} + '/' + ${user.id}}"
                                                   method="post" class="cancelInvitationForm"></form>
                                             <a href="#" class="cancelInvitation">Cancel invitation</a>
+                                        </li>
+                                        <li>
+                                            <form th:action="@{'/message/' + ${user.id}}"
+                                                  method="get" class="sendMessageToForm"></form>
+                                            <a href="#" class="sendMessageTo">Send Message</a>
                                         </li>
                                     </ul>
                                 </div>

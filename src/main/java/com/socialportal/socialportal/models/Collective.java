@@ -6,15 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
-@Entity
 @Data
+@Entity
 @NoArgsConstructor
-public class Message {
+public class Collective {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "tab")
@@ -22,19 +24,11 @@ public class Message {
     private Long id;
 
     @NotNull
-    @Size(max = 3000)
-    private String content;
+    private String name;
 
     @NotNull
-    private Date date;
+    private String description;
 
     @NotNull
-    @ManyToOne
-    @JoinColumn
-    private User receiver;
-
-    @NotNull
-    @ManyToOne
-    @JoinColumn
-    private User sender;
+    private Date creatingDate;
 }

@@ -50,7 +50,16 @@ textarea {
 }
 
 .statusContent {
-    margin-left: 5px;
+
+}
+
+.comment {
+    margin-left: 10px;
+    padding-top: 5px;
+}
+
+.commentContent {
+    background-color: white;
 }
 
 .date {
@@ -59,7 +68,7 @@ textarea {
 }
 
 .comments {
-    margin-left: 10px;
+    background-color: #9acfea;
 }
 
 .dropdown-menu li form {
@@ -104,4 +113,24 @@ textarea {
     background-color: #2aabd2;
     float: right;
     clear: both;
+}
+
+.groups {
+    padding-left: 0px;
+    list-style-type: none;
+}
+
+.groupInformation {
+    word-wrap: break-word;
+}
+
+.members {
+    padding-left: 0px;
+    list-style-type: none;
+}
+
+a.groupName {
+    text-decoration: none;
+    font-size: 30px;
+    color: #0f0f0f;
 }

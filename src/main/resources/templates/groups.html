@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="head :: head"></head>
+<body>
+<nav th:replace="navbar :: navbar"></nav>
+<div id="content" class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <form th:action="@{/creategroup}" method="get">
+                <button class="btn btn-default" type="submit">Create group</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div th:if="${groups.size() != 0}">
+                <h1>Your groups:</h1>
+                <ul class="groups" th:object="${groups}">
+                    <li class="group" th:each="group : ${groups}">
+                        <form th:action="@{'/group/' + ${group.id}}" method="get" class="getGroupForm"></form>
+                        <a href="#" class="groupName" th:text="${group.name}"></a>
+                    </li>
+                </ul>
+            </div>
+            <div th:if="${groups.size() == 0}">
+                <p>You aren't member of any group.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

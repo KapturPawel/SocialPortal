@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 @Controller
 @RequestMapping
 public class MainController {
@@ -86,8 +85,8 @@ public class MainController {
         return getUserProfile(userId, model);
     }
 
-    @GetMapping("/userprofile/{userid}/editstatus/{id}")
-    public String editStatus(Model model, @PathVariable("id") Long id, @PathVariable("userid") Long userId) {
+    @GetMapping("/userprofile/editstatus/{id}")
+    public String editStatus(@PathVariable("id") Long id, Model model) {
         try {
             userValidator.editPrivilege(userManager.getUserId(), statusManager.getIdOfAuthorOfStatus(id));
         } catch (HasPrivilegeException e) {
@@ -99,8 +98,9 @@ public class MainController {
         return "edit";
     }
 
+
     @PostMapping("/userprofile/{userid}/editstatus/{id}")
-    public String editStatus(Model model, @PathVariable("id") Long id, @PathVariable("userid") Long userId, String content) {
+    public String editStatus(@PathVariable("id") Long id, @PathVariable("userid") Long userId, String content, Model model) {
         statusManager.editUserStatus(id, content);
         return getUserProfile(userId, model);
     }
@@ -127,7 +127,7 @@ public class MainController {
     }
 
     @GetMapping("/userprofile/{userid}/editcomment/{id}")
-    public String editComment(Model model, @PathVariable("id") Long commentId) {
+    public String editComment(@PathVariable("id") Long commentId, Model model) {
         try {
             userValidator.editPrivilege(userManager.getUserId(), commentManager.getIdOfAuthorOfComment(commentId));
         } catch (HasPrivilegeException e) {
@@ -140,36 +140,8 @@ public class MainController {
     }
 
     @PostMapping("/userprofile/{userid}/editcomment/{id}")
-    public String editComment(Model model, @PathVariable("userid") Long userid, String content, @PathVariable("id") Long commentId) {
+    public String editComment(@PathVariable("userid") Long userid, String content, @PathVariable("id") Long commentId, Model model) {
         commentManager.editComment(commentId, content);
         return getUserProfile(userid, model);
-    }
-
-    //temporary
-    @GetMapping("/users")
-    public @ResponseBody
-    Iterable<User> allUsers() {
-        return userManager.allUsers();
-    }
-
-    //temporary
-    @GetMapping("/statuses")
-    public @ResponseBody
-    Iterable<UserStatus> allStatuses() {
-        return statusManager.allStatus();
-    }
-
-    //temporary
-    @GetMapping("/comments")
-    public @ResponseBody
-    Iterable<UserComment> allComments() {
-        return commentManager.allComments();
-    }
-
-    //temporary
-    @GetMapping("allmessages")
-    public @ResponseBody
-    Iterable<Message> allMessages() {
-        return messageManager.allMessages();
     }
 }

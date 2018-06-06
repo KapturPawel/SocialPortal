@@ -1,11 +1,7 @@
 package com.socialportal.socialportal;
 
-import com.socialportal.socialportal.models.User;
-import com.socialportal.socialportal.models.UserComment;
-import com.socialportal.socialportal.models.UserStatus;
-import com.socialportal.socialportal.services.ICommentManager;
-import com.socialportal.socialportal.services.IStatusManager;
-import com.socialportal.socialportal.services.IUserManager;
+import com.socialportal.socialportal.models.*;
+import com.socialportal.socialportal.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -16,14 +12,18 @@ import java.util.LinkedList;
 @Component
 public class ExampleDatabase implements CommandLineRunner {
 
-    @Autowired
-    IUserManager userManager;
+    private IUserManager userManager;
+    private IStatusManager statusManager;
+    private ICommentManager commentManager;
+    private ICollectiveManager ICollectiveManager;
 
     @Autowired
-    IStatusManager statusManager;
-
-    @Autowired
-    ICommentManager commentManager;
+    public ExampleDatabase(IUserManager userManager, IStatusManager statusManager, ICommentManager commentManager, ICollectiveManager ICollectiveManager) {
+        this.userManager = userManager;
+        this.statusManager = statusManager;
+        this.commentManager = commentManager;
+        this.ICollectiveManager = ICollectiveManager;
+    }
 
     @Override
     public void run(String... args) throws Exception {
@@ -32,8 +32,8 @@ public class ExampleDatabase implements CommandLineRunner {
         users.add(new User("Piotr", "Prox", "qwerty", "prosty1@gmail.com"));
         users.add(new User("Magda", "Jet", "qwerty", "prosty2@gmail.com"));
         users.add(new User("Jan", "Niezbedny", "qwerty", "prosty3@gmail.com"));
-        users.add( new User("Jan", "Zbedny", "qwerty", "prosty4@gmail.com"));
-        users.add( new User("Piotr", "Kox", "qwerty", "prosty5@gmail.com"));
+        users.add(new User("Jan", "Zbedny", "qwerty", "prosty4@gmail.com"));
+        users.add(new User("Piotr", "Kox", "qwerty", "prosty5@gmail.com"));
 
         for(User user : users){
             userManager.registerUser(user);
@@ -62,6 +62,23 @@ public class ExampleDatabase implements CommandLineRunner {
 
         for(UserComment comment: comments){
             commentManager.addNewComment(comment);
+        }
+
+        LinkedList<Collective> groups = new LinkedList<>();
+        groups.add(new Collective("First Group", "Lorem Ipsum"));
+        groups.add(new Collective("Second Group", "Lorem Ipsum"));
+        groups.add(new Collective("Third Group", "Lorem Ipsum"));
+        groups.add(new Collective("Fourth Group", "Lorem Ipsum"));
+        groups.add(new Collective("Fifth Group", "Lorem Ipsum"));
+
+        for (Collective group: groups){
+            ICollectiveManager.createGroup(group, users.get(0));
+        }
+
+        for (int i = 0; i < groups.size(); i++) {
+            for (int j = 1; j < users.size(); j++){
+                ICollectiveManager.addMember(groups.get(i), users.get(j));
+            }
         }
     }
 }

@@ -10,9 +10,10 @@
         <div class="col-md-6">
             <div class="status">
                 <div class="statusContent">
+                    <p th:text="${receiver.firstName + ' ' + receiver.lastName}"></p>
                     <form th:action="@{'/sendmessage/' + ${receiver.id}}"
                           th:object="${message}" method="post">
-                        <textarea id="message" th:field="*{content}"></textarea>
+                        <textarea id="message" class="form-control" th:field="*{content}" maxlength="3000"></textarea>
                         <button class="btn btn-default" type="submit">Send</button>
                     </form>
                     <form th:action="@{'/userprofile/'}" method="get">

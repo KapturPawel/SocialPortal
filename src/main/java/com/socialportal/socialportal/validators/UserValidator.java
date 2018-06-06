@@ -2,10 +2,9 @@ package com.socialportal.socialportal.validators;
 
 
 import com.socialportal.socialportal.errors.*;
+import com.socialportal.socialportal.models.Invitation;
 import com.socialportal.socialportal.models.User;
-import com.socialportal.socialportal.services.IFriendManager;
-import com.socialportal.socialportal.services.IInvitationManager;
-import com.socialportal.socialportal.services.IUserManager;
+import com.socialportal.socialportal.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ public class UserValidator implements IUserValidator {
     private IInvitationManager invitationManager;
 
     @Autowired
-    public UserValidator(IUserManager userManager, IFriendManager friendManager, IInvitationManager invitationManager) {
+    public UserValidator(IUserManager userManager, IFriendManager friendManager, IInvitationManager invitationManager, ICollectiveManager ICollectiveManager) {
         this.userManager = userManager;
         this.friendManager = friendManager;
         this.invitationManager = invitationManager;
@@ -77,6 +76,12 @@ public class UserValidator implements IUserValidator {
     public void checkSameUser(Long loggedUser, Long addedFriend) throws SameUserException {
         if (loggedUser == addedFriend)
             throw new SameUserException();
+    }
+
+    public void checkIfUserInvitation(Long invitationId) throws NotYourInvitationException {
+        Invitation invitation = invitationManager.getInvitationById(invitationId);
+        if (!(invitation.getSender() == userManager.getUserById(userManager.getUserId()) || invitation.getReceiver() == userManager.getUserById(userManager.getUserId())))
+            throw new NotYourInvitationException();
     }
 }
 

@@ -6,17 +6,14 @@
 <div id="content" class="container">
     <div class="row">
         <div class="col-md-3">
-            <form th:action="@{/creategroup}" method="get">
-                <button class="btn btn-default" type="submit">Create group</button>
-            </form>
+            <a th:href="@{/creategroup}">Create group</a>
         </div>
         <div class="col-md-6">
             <div th:if="${groups.size() != 0}">
                 <h1>Your groups:</h1>
-                <ul class="groups" th:object="${groups}">
+                <ul class="list" th:object="${groups}">
                     <li class="group" th:each="group : ${groups}">
-                        <form th:action="@{'/group/' + ${group.id}}" method="get" class="getGroupForm"></form>
-                        <a href="#" class="groupName" th:text="${group.name}"></a>
+                        <a class="groupName" th:href="@{'/group/' + ${group.id}}" th:text="${group.name}"></a>
                     </li>
                 </ul>
             </div>

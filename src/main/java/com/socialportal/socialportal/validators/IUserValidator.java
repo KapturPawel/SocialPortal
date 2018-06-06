@@ -2,6 +2,7 @@ package com.socialportal.socialportal.validators;
 
 import com.socialportal.socialportal.errors.*;
 import com.socialportal.socialportal.models.User;
+import org.springframework.ui.Model;
 
 public interface IUserValidator {
     void validateUser(User user) throws DifferentPasswordException, ExistingEmailException;
@@ -17,4 +18,6 @@ public interface IUserValidator {
     void checkAddingFriend(Long loggedUser, Long addedFriend) throws SameUserException, HasThisFriendException;
 
     void checkSendInvitation(Long loggedUser, Long addedFriend) throws HasInvitationException, HasThisFriendException, SameUserException;
+
+    void checkIfUserInvitation(Long invitationId) throws NotYourInvitationException;
 }
